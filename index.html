@@ -1,154 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Instagram</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
+      font-family: Arial, sans-serif;
       background-color: #fafafa;
     }
+
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
+      padding: 15px 20px;
       border-bottom: 1px solid #dbdbdb;
-      background-color: white;
+      background-color: #fff;
       position: sticky;
       top: 0;
       z-index: 10;
     }
-    header h1 {
-      font-family: 'Segoe UI', sans-serif;
+
+    .logo {
       font-size: 24px;
+      font-weight: bold;
     }
-    .messages-icon {
-      width: 24px;
-      height: 24px;
+
+    .header-icons i {
+      font-size: 20px;
+      margin-left: 15px;
+      cursor: pointer;
     }
+
     .story-container {
       display: flex;
       overflow-x: auto;
       padding: 10px;
-      background-color: white;
+      background-color: #fff;
       border-bottom: 1px solid #dbdbdb;
     }
+
     .story {
-      flex: 0 0 auto;
       text-align: center;
       margin-right: 15px;
+      flex-shrink: 0;
     }
-    .story img {
-      width: 64px;
-      height: 64px;
+
+    .story .avatar {
+      width: 65px;
+      height: 65px;
       border-radius: 50%;
-      padding: 4px;
-      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-      border: 3px solid transparent;
-      box-sizing: content-box;
+      border: 3px solid;
+      background: conic-gradient(from 180deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      padding: 2px;
     }
-    .story p {
-      font-size: 12px;
-      margin: 5px 0 0;
-    }
-    .posts {
-      padding: 10px;
-      max-width: 600px;
-      margin: auto;
-    }
-    .post {
-      background-color: white;
-      border: 1px solid #dbdbdb;
-      border-radius: 5px;
-      margin-bottom: 20px;
-      animation: fadeIn 0.5s ease-in;
-    }
-    .post img {
+
+    .story .avatar img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
     }
-    .post-icons {
+
+    .story span {
+      display: block;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .post {
+      background-color: #fff;
+      border: 1px solid #dbdbdb;
+      margin: 20px auto;
+      max-width: 500px;
+    }
+
+    .post-header, .post-footer {
       display: flex;
-      gap: 10px;
+      align-items: center;
       padding: 10px;
-      font-size: 20px;
+    }
+
+    .post-header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .post-image {
+      width: 100%;
+    }
+
+    .post-footer i {
+      font-size: 22px;
+      margin-right: 15px;
       cursor: pointer;
     }
-    .liked {
-      color: red;
-    }
-    .post-content {
+
+    .comment-section {
       padding: 0 10px 10px;
     }
-    .comments input {
-      width: 95%;
+
+    .comment-section input {
+      width: 100%;
       padding: 8px;
       border: none;
       border-top: 1px solid #eee;
       outline: none;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Instagram</h1>
-    <img src="https://cdn-icons-png.flaticon.com/512/5948/5948534.png" alt="Messages" class="messages-icon">
-  </header>
 
-  <div class="story-container">
-    <!-- 動態頭像 -->
-    <script>
-      const users = [...Array(20)].map((_, i) => `user${Math.floor(Math.random()*999)}${Math.random()<0.5 ? '_' : '.'}${Math.random().toString(36).substring(7)}`);
-      document.write(users.map(user => `
-        <div class="story">
-          <img src="https://i.pravatar.cc/150?img=${Math.floor(Math.random()*70)+1}" alt="story">
-          <p>${user}</p>
-        </div>`).join(''));
-    </script>
+<header>
+  <div class="logo">InstaClone</div>
+  <div class="header-icons">
+    <i class="fas fa-paper-plane"></i>
   </div>
+</header>
 
-  <div class="posts">
-    <div class="post">
-      <img src="https://source.unsplash.com/600x400/?nature,forest,mountain" alt="post image">
-      <div class="post-icons">
-        <span class="like-button">♡</span>
-        <span>💬</span>
-        <span>📤</span>
-      </div>
-      <div class="post-content">
-        <strong>nature_photo_01</strong> A peaceful morning hike with birds singing and the scent of pine in the air 🍃
-      </div>
-      <div class="comments">
-        <input type="text" placeholder="Add a comment...">
-      </div>
-    </div>
+<div class="story-container" id="stories">
+  <!-- Stories will be inserted here by JS -->
+</div>
+
+<div class="post">
+  <div class="post-header">
+    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="user">
+    <strong>amanda</strong>
   </div>
+  <img src="https://source.unsplash.com/500x500/?nature" class="post-image" />
+  <div class="post-footer">
+    <i class="far fa-heart"></i>
+    <i class="far fa-comment"></i>
+    <i class="far fa-paper-plane"></i>
+  </div>
+  <div class="comment-section">
+    <input type="text" placeholder="Add a comment...">
+  </div>
+</div>
 
-  <script>
-    // Like button toggle
-    document.querySelectorAll('.like-button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.textContent = btn.textContent === '♡' ? '❤️' : '♡';
-        btn.classList.toggle('liked');
-      });
-    });
+<script>
+  const names = [
+    "alex", "mike", "linda", "charlie", "zoe", "kate", "john", "bella", "lucas", "nina",
+    "oliver", "eva", "daniel", "mia", "noah", "lily", "jack", "emma", "liam", "grace"
+  ];
 
-    // Comment submission
-    document.querySelectorAll('.comments input').forEach(input => {
-      input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter' && this.value.trim() !== '') {
-          alert(`你留言了：${this.value}`);
-          this.value = '';
-        }
-      });
-    });
-  </script>
+  const container = document.getElementById('stories');
+
+  names.forEach((name, i) => {
+    const div = document.createElement('div');
+    div.className = 'story';
+    div.innerHTML = `
+      <div class="avatar">
+        <img src="https://randomuser.me/api/portraits/thumb/${i % 2 === 0 ? 'men' : 'women'}/${i + 10}.jpg" alt="${name}" />
+      </div>
+      <span>${name}</span>
+    `;
+    container.appendChild(div);
+  });
+</script>
+
 </body>
 </html>
