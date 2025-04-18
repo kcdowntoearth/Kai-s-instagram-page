@@ -1,92 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Instagram</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Instagram 仿作</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
+      margin: 0;
       background-color: #fafafa;
     }
 
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      border-bottom: 1px solid #dbdbdb;
-      background-color: #fff;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .logo {
+      padding: 10px 16px;
       font-size: 24px;
       font-weight: bold;
+      border-bottom: 1px solid #dbdbdb;
+      background-color: white;
     }
 
-    .header-icons i {
-      font-size: 20px;
-      margin-left: 15px;
-      cursor: pointer;
-    }
-
-    .story-container {
+    .stories {
       display: flex;
       overflow-x: auto;
       padding: 10px;
-      background-color: #fff;
+      background-color: white;
       border-bottom: 1px solid #dbdbdb;
     }
 
     .story {
+      margin-right: 12px;
       text-align: center;
-      margin-right: 15px;
-      flex-shrink: 0;
     }
 
-    .story .avatar {
-      width: 65px;
-      height: 65px;
+    .story img {
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      border: 3px solid;
-      background: conic-gradient(from 180deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-      padding: 2px;
+      border: 2px solid #c13584;
     }
 
-    .story .avatar img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .story span {
-      display: block;
-      font-size: 12px;
-      margin-top: 5px;
+    .posts {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px 0;
     }
 
     .post {
-      background-color: #fff;
+      background-color: white;
       border: 1px solid #dbdbdb;
-      margin: 20px auto;
-      max-width: 500px;
+      margin-bottom: 24px;
     }
 
-    .post-header, .post-footer {
+    .post-header {
       display: flex;
       align-items: center;
       padding: 10px;
     }
 
     .post-header img {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       margin-right: 10px;
     }
@@ -95,74 +68,107 @@
       width: 100%;
     }
 
-    .post-footer i {
-      font-size: 22px;
-      margin-right: 15px;
-      cursor: pointer;
+    .post-actions {
+      display: flex;
+      align-items: center;
+      padding: 8px 10px;
     }
 
-    .comment-section {
+    .post-actions button {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .post-caption {
       padding: 0 10px 10px;
     }
 
-    .comment-section input {
-      width: 100%;
-      padding: 8px;
+    .comment-box {
+      display: flex;
+      border-top: 1px solid #dbdbdb;
+      padding: 8px 10px;
+    }
+
+    .comment-box input {
+      flex: 1;
       border: none;
-      border-top: 1px solid #eee;
       outline: none;
+      font-size: 14px;
+    }
+
+    .comment-box button {
+      border: none;
+      background: none;
+      color: #0095f6;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
     }
   </style>
 </head>
 <body>
+  <header>Instagram</header>
 
-<header>
-  <div class="logo">InstaClone</div>
-  <div class="header-icons">
-    <i class="fas fa-paper-plane"></i>
+  <div class="stories">
+    <!-- 限時動態 -->
+    <div class="story"><img src="https://i.pravatar.cc/60?img=1" alt=""><div>用戶1</div></div>
+    <div class="story"><img src="https://i.pravatar.cc/60?img=2" alt=""><div>用戶2</div></div>
+    <div class="story"><img src="https://i.pravatar.cc/60?img=3" alt=""><div>用戶3</div></div>
+    <div class="story"><img src="https://i.pravatar.cc/60?img=4" alt=""><div>用戶4</div></div>
+    <div class="story"><img src="https://i.pravatar.cc/60?img=5" alt=""><div>用戶5</div></div>
+    <div class="story"><img src="https://i.pravatar.cc/60?img=6" alt=""><div>用戶6</div></div>
+    <div class="story"><img src="https://i.pravatar.cc/60?img=7" alt=""><div>用戶7</div></div>
   </div>
-</header>
 
-<div class="story-container" id="stories">
-  <!-- Stories will be inserted here by JS -->
-</div>
-
-<div class="post">
-  <div class="post-header">
-    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="user">
-    <strong>amanda</strong>
-  </div>
-  <img src="https://source.unsplash.com/500x500/?nature" class="post-image" />
-  <div class="post-footer">
-    <i class="far fa-heart"></i>
-    <i class="far fa-comment"></i>
-    <i class="far fa-paper-plane"></i>
-  </div>
-  <div class="comment-section">
-    <input type="text" placeholder="Add a comment...">
-  </div>
-</div>
-
-<script>
-  const names = [
-    "alex", "mike", "linda", "charlie", "zoe", "kate", "john", "bella", "lucas", "nina",
-    "oliver", "eva", "daniel", "mia", "noah", "lily", "jack", "emma", "liam", "grace"
-  ];
-
-  const container = document.getElementById('stories');
-
-  names.forEach((name, i) => {
-    const div = document.createElement('div');
-    div.className = 'story';
-    div.innerHTML = `
-      <div class="avatar">
-        <img src="https://randomuser.me/api/portraits/thumb/${i % 2 === 0 ? 'men' : 'women'}/${i + 10}.jpg" alt="${name}" />
+  <div class="posts">
+    <!-- 貼文 -->
+    <div class="post">
+      <div class="post-header">
+        <img src="https://i.pravatar.cc/32?img=1" alt="">
+        <strong>用戶1</strong>
       </div>
-      <span>${name}</span>
-    `;
-    container.appendChild(div);
-  });
-</script>
+      <img src="https://picsum.photos/600/400?random=1" class="post-image" alt="貼文圖片">
+      <div class="post-actions">
+        <button onclick="toggleLike(this)">♡</button>
+      </div>
+      <div class="post-caption"><strong>用戶1</strong> 這是一張美麗的照片！</div>
+      <div class="comment-box">
+        <input type="text" placeholder="新增留言……">
+        <button>發佈</button>
+      </div>
+    </div>
 
+    <div class="post">
+      <div class="post-header">
+        <img src="https://i.pravatar.cc/32?img=3" alt="">
+        <strong>用戶3</strong>
+      </div>
+      <img src="https://picsum.photos/600/400?random=2" class="post-image" alt="貼文圖片">
+      <div class="post-actions">
+        <button onclick="toggleLike(this)">♡</button>
+      </div>
+      <div class="post-caption"><strong>用戶3</strong> 夏日海邊超棒☀️</div>
+      <div class="comment-box">
+        <input type="text" placeholder="新增留言……">
+        <button>發佈</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleLike(button) {
+      if (button.textContent === '♡') {
+        button.textContent = '❤️';
+      } else {
+        button.textContent = '♡';
+      }
+    }
+  </script>
 </body>
 </html>
