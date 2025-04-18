@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Insta Clone</title>
+  <title>Instagram</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     body {
@@ -53,9 +53,11 @@
       width: 65px;
       height: 65px;
       border-radius: 50%;
-      border: 3px solid;
-      background: conic-gradient(from 180deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
       padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .story .avatar img {
@@ -63,12 +65,17 @@
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
+      border: 2px solid white;
     }
 
     .story span {
       display: block;
       font-size: 12px;
       margin-top: 5px;
+      max-width: 70px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .post {
@@ -103,6 +110,10 @@
       cursor: pointer;
     }
 
+    .post-footer i.liked {
+      color: #ed4956;
+    }
+
     .comment-section {
       padding: 0 10px 10px;
     }
@@ -119,35 +130,46 @@
       font-size: 14px;
       padding: 0 10px 5px;
     }
+
+    .caption {
+      padding: 0 10px 10px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">InstaClone</div>
+  <div class="logo">Instagram</div>
   <div class="header-icons">
     <i class="fas fa-paper-plane"></i>
   </div>
 </header>
 
 <div class="story-container" id="stories"></div>
-
 <div id="posts"></div>
 
 <script>
-  const users = [
-    "alex", "mike", "linda", "charlie", "zoe", "kate", "john", "bella", "lucas", "nina",
-    "oliver", "eva", "daniel", "mia", "noah", "lily", "jack", "emma", "liam", "grace"
+  const users = Array.from({ length: 20 }, (_, i) => {
+    const parts = ["user", "photo", "pic", "gram", "live", "love", "snap", "star"];
+    return parts[Math.floor(Math.random() * parts.length)] + (Math.floor(Math.random() * 100)) + (Math.random() > 0.5 ? '_' : '.') + parts[Math.floor(Math.random() * parts.length)];
+  });
+
+  const captions = [
+    "Enjoying the sunset 🌇",
+    "Just chilling with my dog 🐶",
+    "What a beautiful day at the beach 🏖️",
+    "Brunch time! 🍳🥐",
+    "Nature always wins 🌿"
   ];
 
-  const postsData = [
-    { name: "alex", avatar: 12, img: "https://source.unsplash.com/500x500/?city" },
-    { name: "mia", avatar: 24, img: "https://source.unsplash.com/500x500/?dog" },
-    { name: "lucas", avatar: 28, img: "https://source.unsplash.com/500x500/?food" },
-    { name: "kate", avatar: 32, img: "https://source.unsplash.com/500x500/?ocean" }
-  ];
+  const postsData = users.slice(0, 5).map((name, i) => ({
+    name,
+    avatar: i + 10,
+    img: `https://source.unsplash.com/500x500/?nature,${i}`,
+    caption: captions[i % captions.length]
+  }));
 
-  // 限時動態
   const stories = document.getElementById('stories');
   users.forEach((name, i) => {
     const div = document.createElement('div');
@@ -161,7 +183,6 @@
     stories.appendChild(div);
   });
 
-  // 貼文動態
   const postContainer = document.getElementById('posts');
   postsData.forEach((post, index) => {
     const div = document.createElement('div');
@@ -173,10 +194,11 @@
       </div>
       <img src="${post.img}" class="post-image" />
       <div class="post-footer">
-        <i class="far fa-heart"></i>
+        <i class="far fa-heart" data-index="${index}"></i>
         <i class="far fa-comment"></i>
         <i class="far fa-paper-plane"></i>
       </div>
+      <div class="caption">${post.caption}</div>
       <div class="comments" id="comments-${index}"></div>
       <div class="comment-section">
         <input type="text" placeholder="Add a comment..." data-index="${index}" />
@@ -185,7 +207,6 @@
     postContainer.appendChild(div);
   });
 
-  // 留言按 Enter 功能
   document.querySelectorAll('.comment-section input').forEach(input => {
     input.addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
@@ -198,6 +219,19 @@
           commentBox.appendChild(p);
           e.target.value = '';
         }
+      }
+    });
+  });
+
+  document.querySelectorAll('.fa-heart').forEach(heart => {
+    heart.addEventListener('click', () => {
+      heart.classList.toggle('liked');
+      if (heart.classList.contains('liked')) {
+        heart.classList.remove('far');
+        heart.classList.add('fas');
+      } else {
+        heart.classList.remove('fas');
+        heart.classList.add('far');
       }
     });
   });
