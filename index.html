@@ -1,241 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instagram</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
+      margin: 0;
       background-color: #fafafa;
     }
-
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 20px;
+      padding: 10px 20px;
       border-bottom: 1px solid #dbdbdb;
-      background-color: #fff;
+      background-color: white;
       position: sticky;
       top: 0;
       z-index: 10;
     }
-
-    .logo {
+    header h1 {
+      font-family: 'Segoe UI', sans-serif;
       font-size: 24px;
-      font-weight: bold;
     }
-
-    .header-icons i {
-      font-size: 20px;
-      margin-left: 15px;
-      cursor: pointer;
+    .messages-icon {
+      width: 24px;
+      height: 24px;
     }
-
     .story-container {
       display: flex;
       overflow-x: auto;
       padding: 10px;
-      background-color: #fff;
+      background-color: white;
       border-bottom: 1px solid #dbdbdb;
     }
-
     .story {
+      flex: 0 0 auto;
       text-align: center;
-      margin-right: 15px;
-      flex-shrink: 0;
-    }
-
-    .story .avatar {
-      width: 65px;
-      height: 65px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-      padding: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .story .avatar img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid white;
-    }
-
-    .story span {
-      display: block;
-      font-size: 12px;
-      margin-top: 5px;
-      max-width: 70px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .post {
-      background-color: #fff;
-      border: 1px solid #dbdbdb;
-      margin: 20px auto;
-      max-width: 500px;
-    }
-
-    .post-header, .post-footer {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-    }
-
-    .post-header img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
       margin-right: 10px;
     }
-
-    .post-image {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
+    .story img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      padding: 2px;
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
     }
-
-    .post-footer i {
-      font-size: 22px;
-      margin-right: 15px;
+    .story p {
+      font-size: 12px;
+      margin: 5px 0 0;
+    }
+    .posts {
+      padding: 10px;
+      max-width: 600px;
+      margin: auto;
+    }
+    .post {
+      background-color: white;
+      border: 1px solid #dbdbdb;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      animation: fadeIn 0.5s ease-in;
+    }
+    .post img {
+      width: 100%;
+      height: auto;
+    }
+    .post-icons {
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      font-size: 20px;
       cursor: pointer;
     }
-
-    .post-footer i.liked {
-      color: #ed4956;
+    .liked {
+      color: red;
     }
-
-    .comment-section {
+    .post-content {
       padding: 0 10px 10px;
     }
-
-    .comment-section input {
-      width: 100%;
+    .comments input {
+      width: 95%;
       padding: 8px;
       border: none;
       border-top: 1px solid #eee;
       outline: none;
     }
-
-    .comments {
-      font-size: 14px;
-      padding: 0 10px 5px;
-    }
-
-    .caption {
-      padding: 0 10px 10px;
-      font-size: 14px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Instagram</h1>
+    <img src="https://cdn-icons-png.flaticon.com/512/5948/5948534.png" alt="Messages" class="messages-icon">
+  </header>
 
-<header>
-  <div class="logo">Instagram</div>
-  <div class="header-icons">
-    <i class="fas fa-paper-plane"></i>
+  <div class="story-container">
+    <!-- 動態頭像 -->
+    <script>
+      const users = [...Array(20)].map((_, i) => `user${Math.floor(Math.random()*999)}${Math.random()<0.5 ? '_' : '.'}${Math.random().toString(36).substring(7)}`);
+      document.write(users.map(user => `
+        <div class="story">
+          <img src="https://i.pravatar.cc/150?img=${Math.floor(Math.random()*70)+1}" alt="story">
+          <p>${user}</p>
+        </div>`).join(''));
+    </script>
   </div>
-</header>
 
-<div class="story-container" id="stories"></div>
-<div id="posts"></div>
-
-<script>
-  const users = Array.from({ length: 20 }, (_, i) => {
-    const parts = ["user", "photo", "pic", "gram", "live", "love", "snap", "star"];
-    return parts[Math.floor(Math.random() * parts.length)] + (Math.floor(Math.random() * 100)) + (Math.random() > 0.5 ? '_' : '.') + parts[Math.floor(Math.random() * parts.length)];
-  });
-
-  const captions = [
-    "Enjoying the sunset 🌇",
-    "Just chilling with my dog 🐶",
-    "What a beautiful day at the beach 🏖️",
-    "Brunch time! 🍳🥐",
-    "Nature always wins 🌿"
-  ];
-
-  const postsData = users.slice(0, 5).map((name, i) => ({
-    name,
-    avatar: i + 10,
-    img: `https://source.unsplash.com/500x500/?nature,${i}`,
-    caption: captions[i % captions.length]
-  }));
-
-  const stories = document.getElementById('stories');
-  users.forEach((name, i) => {
-    const div = document.createElement('div');
-    div.className = 'story';
-    div.innerHTML = `
-      <div class="avatar">
-        <img src="https://randomuser.me/api/portraits/thumb/${i % 2 === 0 ? 'men' : 'women'}/${i + 10}.jpg" />
+  <div class="posts">
+    <div class="post">
+      <img src="https://source.unsplash.com/random/600x400?nature" alt="post image">
+      <div class="post-icons">
+        <span class="like-button">♡</span>
+        <span>💬</span>
+        <span>📤</span>
       </div>
-      <span>${name}</span>
-    `;
-    stories.appendChild(div);
-  });
+      <div class="post-content">
+        <strong>nature_photo_01</strong> Exploring the beauty of the mountains and feeling free 🏔️✨
+      </div>
+      <div class="comments">
+        <input type="text" placeholder="Add a comment...">
+      </div>
+    </div>
+  </div>
 
-  const postContainer = document.getElementById('posts');
-  postsData.forEach((post, index) => {
-    const div = document.createElement('div');
-    div.className = 'post';
-    div.innerHTML = `
-      <div class="post-header">
-        <img src="https://randomuser.me/api/portraits/thumb/men/${post.avatar}.jpg" />
-        <strong>${post.name}</strong>
-      </div>
-      <img src="${post.img}" class="post-image" />
-      <div class="post-footer">
-        <i class="far fa-heart" data-index="${index}"></i>
-        <i class="far fa-comment"></i>
-        <i class="far fa-paper-plane"></i>
-      </div>
-      <div class="caption">${post.caption}</div>
-      <div class="comments" id="comments-${index}"></div>
-      <div class="comment-section">
-        <input type="text" placeholder="Add a comment..." data-index="${index}" />
-      </div>
-    `;
-    postContainer.appendChild(div);
-  });
+  <script>
+    // Like button toggle
+    document.querySelectorAll('.like-button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.textContent = btn.textContent === '♡' ? '❤️' : '♡';
+        btn.classList.toggle('liked');
+      });
+    });
 
-  document.querySelectorAll('.comment-section input').forEach(input => {
-    input.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        const val = e.target.value.trim();
-        const idx = e.target.getAttribute('data-index');
-        if (val !== '') {
-          const commentBox = document.getElementById(`comments-${idx}`);
-          const p = document.createElement('p');
-          p.textContent = `你：${val}`;
-          commentBox.appendChild(p);
-          e.target.value = '';
+    // Comment submission
+    document.querySelectorAll('.comments input').forEach(input => {
+      input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && this.value.trim() !== '') {
+          alert(`你留言了：${this.value}`);
+          this.value = '';
         }
-      }
+      });
     });
-  });
-
-  document.querySelectorAll('.fa-heart').forEach(heart => {
-    heart.addEventListener('click', () => {
-      heart.classList.toggle('liked');
-      if (heart.classList.contains('liked')) {
-        heart.classList.remove('far');
-        heart.classList.add('fas');
-      } else {
-        heart.classList.remove('fas');
-        heart.classList.add('far');
-      }
-    });
-  });
-</script>
-
+  </script>
 </body>
 </html>
