@@ -1,154 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instagram</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #fafafa;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      border-bottom: 1px solid #dbdbdb;
-      background-color: white;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    header h1 {
-      font-family: 'Segoe UI', sans-serif;
-      font-size: 24px;
-    }
-    .messages-icon {
-      width: 24px;
-      height: 24px;
-    }
-    .story-container {
-      display: flex;
-      overflow-x: auto;
-      padding: 10px;
-      background-color: white;
-      border-bottom: 1px solid #dbdbdb;
-    }
-    .story {
-      flex: 0 0 auto;
-      text-align: center;
-      margin-right: 15px;
-    }
-    .story img {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      padding: 4px;
-      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-      border: 3px solid transparent;
-      box-sizing: content-box;
-    }
-    .story p {
-      font-size: 12px;
-      margin: 5px 0 0;
-    }
-    .posts {
-      padding: 10px;
-      max-width: 600px;
-      margin: auto;
-    }
-    .post {
-      background-color: white;
-      border: 1px solid #dbdbdb;
-      border-radius: 5px;
-      margin-bottom: 20px;
-      animation: fadeIn 0.5s ease-in;
-    }
-    .post img {
-      width: 100%;
-      height: auto;
-    }
-    .post-icons {
-      display: flex;
-      gap: 10px;
-      padding: 10px;
-      font-size: 20px;
-      cursor: pointer;
-    }
-    .liked {
-      color: red;
-    }
-    .post-content {
-      padding: 0 10px 10px;
-    }
-    .comments input {
-      width: 95%;
-      padding: 8px;
-      border: none;
-      border-top: 1px solid #eee;
-      outline: none;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram-like Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fafafa;
+        }
+        /* Header for Instagram */
+        header {
+            background-color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+        header img {
+            height: 30px;
+        }
+
+        /* Stories Section */
+        .stories {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px;
+        }
+        .story {
+            margin-right: 10px;
+            display: inline-block;
+            text-align: center;
+        }
+        .story img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 5px solid;
+            background: linear-gradient(45deg, #FF512F, #DD2476); /* Gradient for Instagram style */
+            object-fit: cover;
+        }
+        .story-name {
+            font-size: 12px;
+            color: #333;
+        }
+
+        /* Post Section */
+        .posts {
+            margin-top: 20px;
+        }
+        .post {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 10px;
+        }
+        .post img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        .icon {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .heart {
+            color: white;
+        }
+        .heart.active {
+            color: red;
+        }
+        .comments {
+            margin-top: 10px;
+        }
+
+        /* Chat Icon */
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 40px;
+            color: #0088cc;
+            cursor: pointer;
+        }
+
+        /* Animation */
+        @keyframes heart-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .heart.active {
+            animation: heart-pulse 0.3s ease-in-out;
+        }
+
+        .comment-box input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Instagram</h1>
-    <img src="https://cdn-icons-png.flaticon.com/512/5948/5948534.png" alt="Messages" class="messages-icon">
-  </header>
 
-  <div class="story-container">
-    <!-- 動態頭像 -->
-    <script>
-      const users = [...Array(20)].map((_, i) => `user${Math.floor(Math.random()*999)}${Math.random()<0.5 ? '_' : '.'}${Math.random().toString(36).substring(7)}`);
-      document.write(users.map(user => `
-        <div class="story">
-          <img src="https://i.pravatar.cc/150?img=${Math.floor(Math.random()*70)+1}" alt="story">
-          <p>${user}</p>
-        </div>`).join(''));
-    </script>
-  </div>
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png" alt="Instagram Logo">
+    <input type="text" placeholder="Search" style="padding: 5px; border-radius: 5px;">
+</header>
 
-  <div class="posts">
-    <div class="post">
-      <img src="https://source.unsplash.com/600x400/?nature,forest,mountain" alt="post image">
-      <div class="post-icons">
-        <span class="like-button">♡</span>
-        <span>💬</span>
-        <span>📤</span>
-      </div>
-      <div class="post-content">
-        <strong>nature_photo_01</strong> A peaceful morning hike with birds singing and the scent of pine in the air 🍃
-      </div>
-      <div class="comments">
-        <input type="text" placeholder="Add a comment...">
-      </div>
+<!-- Stories Section -->
+<div class="stories">
+    <div class="story">
+        <img src="https://randomuser.me/api/portraits/men/10.jpg" alt="User">
+        <div class="story-name">john_doe_92</div>
     </div>
-  </div>
+    <!-- Repeat story blocks (20 stories) -->
+    <!-- ... Add other user stories here with similar structure -->
+</div>
 
-  <script>
-    // Like button toggle
-    document.querySelectorAll('.like-button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.textContent = btn.textContent === '♡' ? '❤️' : '♡';
-        btn.classList.toggle('liked');
-      });
+<!-- Post Section -->
+<div class="posts">
+    <div class="post">
+        <img src="https://source.unsplash.com/800x600/?nature" alt="Nature Image">
+        <div class="post-actions">
+            <div class="heart icon" onclick="toggleHeart(this)">
+                ❤️
+            </div>
+            <div class="icon">💬</div>
+            <div class="icon">🔗</div>
+        </div>
+        <div class="comments">
+            <div><strong>nature_lover</strong> Beautiful sunset!</div>
+            <div class="comment-box">
+                <input type="text" placeholder="Add a comment..." onkeydown="sendComment(event)">
+            </div>
+        </div>
+    </div>
+    <!-- Repeat for more posts -->
+</div>
+
+<!-- Chat Icon -->
+<div class="chat-icon" onclick="openChat()">💬</div>
+
+<script>
+    // Random user name generation for stories
+    const userNames = [];
+    for (let i = 0; i < 20; i++) {
+        let name = Math.random().toString(36).substring(7);
+        userNames.push(name);
+    }
+    
+    const storiesContainer = document.querySelector('.stories');
+    userNames.forEach(name => {
+        let story = document.createElement('div');
+        story.classList.add('story');
+        story.innerHTML = `
+            <img src="https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 10)}.jpg" alt="User">
+            <div class="story-name">${name}</div>
+        `;
+        storiesContainer.appendChild(story);
     });
 
-    // Comment submission
-    document.querySelectorAll('.comments input').forEach(input => {
-      input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter' && this.value.trim() !== '') {
-          alert(`你留言了：${this.value}`);
-          this.value = '';
+    // Toggle heart button color
+    function toggleHeart(button) {
+        button.classList.toggle('active');
+    }
+
+    // Send comment when pressing Enter
+    function sendComment(event) {
+        if (event.key === 'Enter') {
+            alert('Comment sent!');
+            event.target.value = ''; // Clear input
         }
-      });
-    });
-  </script>
+    }
+
+    // Placeholder function for opening chat
+    function openChat() {
+        alert('Open Chat!');
+    }
+</script>
+
 </body>
 </html>
