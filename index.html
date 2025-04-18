@@ -1,195 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram-like Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fafafa;
-        }
-        /* Header for Instagram */
-        header {
-            background-color: #fff;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-        }
-        header img {
-            height: 30px;
-        }
-
-        /* Stories Section */
-        .stories {
-            display: flex;
-            overflow-x: auto;
-            padding: 10px;
-        }
-        .story {
-            margin-right: 10px;
-            display: inline-block;
-            text-align: center;
-        }
-        .story img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 5px solid;
-            background: linear-gradient(45deg, #FF512F, #DD2476); /* Gradient for Instagram style */
-            object-fit: cover;
-        }
-        .story-name {
-            font-size: 12px;
-            color: #333;
-        }
-
-        /* Post Section */
-        .posts {
-            margin-top: 20px;
-        }
-        .post {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin: 10px;
-            padding: 10px;
-        }
-        .post img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .post-actions {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-        }
-        .icon {
-            cursor: pointer;
-            font-size: 20px;
-        }
-        .heart {
-            color: white;
-        }
-        .heart.active {
-            color: red;
-        }
-        .comments {
-            margin-top: 10px;
-        }
-
-        /* Chat Icon */
-        .chat-icon {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            font-size: 40px;
-            color: #0088cc;
-            cursor: pointer;
-        }
-
-        /* Animation */
-        @keyframes heart-pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .heart.active {
-            animation: heart-pulse 0.3s ease-in-out;
-        }
-
-        .comment-box input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+    body {
+      background: #fafafa;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 800px;
+      margin-top: 20px;
+      display: flex;
+    }
+    .main-content {
+      flex: 3;
+    }
+    .story-bar {
+      display: flex;
+      overflow-x: auto;
+      padding: 10px;
+      border-bottom: 1px solid #dbdbdb;
+    }
+    .story-bar::-webkit-scrollbar {
+      display: none;
+    }
+    .story {
+      margin-right: 15px;
+      text-align: center;
+    }
+    .story img {
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      border: 3px solid transparent;
+    }
+    .story span {
+      font-size: 12px;
+      display: block;
+      margin-top: 5px;
+      width: 70px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .post {
+      background: #fff;
+      margin-top: 20px;
+      border: 1px solid #dbdbdb;
+      border-radius: 5px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .post-header {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+    }
+    .post-header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .post-img {
+      width: 100%;
+      height: auto;
+    }
+    .post-icons {
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+    }
+    .post-icons i {
+      font-size: 24px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .post-icons i.liked {
+      color: red;
+    }
+    .post-caption {
+      padding: 0 10px 10px;
+    }
+    .comments {
+      padding: 0 10px 10px;
+    }
+    .comment-box {
+      width: 100%;
+      border: none;
+      padding: 10px;
+      border-top: 1px solid #dbdbdb;
+    }
+    .sidebar {
+      flex: 1;
+      margin-left: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .message-icon {
+      font-size: 28px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-
-<header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png" alt="Instagram Logo">
-    <input type="text" placeholder="Search" style="padding: 5px; border-radius: 5px;">
-</header>
-
-<!-- Stories Section -->
-<div class="stories">
-    <div class="story">
-        <img src="https://randomuser.me/api/portraits/men/10.jpg" alt="User">
-        <div class="story-name">john_doe_92</div>
-    </div>
-    <!-- Repeat story blocks (20 stories) -->
-    <!-- ... Add other user stories here with similar structure -->
-</div>
-
-<!-- Post Section -->
-<div class="posts">
-    <div class="post">
-        <img src="https://source.unsplash.com/800x600/?nature" alt="Nature Image">
-        <div class="post-actions">
-            <div class="heart icon" onclick="toggleHeart(this)">
-                ❤️
+  <div class="container">
+    <div class="main-content">
+      <div class="story-bar">
+        <!-- Generate 20 stories -->
+        <!-- Sample user generation -->
+        <!-- Repeat this block for 20 users -->
+        <!-- For brevity only 5 shown -->
+        <script>
+          const usernames = Array.from({ length: 20 }, (_, i) => `user_${Math.random().toString(36).substring(2, 8)}.${i}`);
+          document.write(usernames.map(user => `
+            <div class="story">
+              <img src="https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70) + 1}" alt="${user}">
+              <span>${user}</span>
             </div>
-            <div class="icon">💬</div>
-            <div class="icon">🔗</div>
+          `).join(''))
+        </script>
+      </div>
+
+      <!-- Post Example -->
+      <div class="post">
+        <div class="post-header">
+          <img src="https://i.pravatar.cc/150?img=20" alt="avatar">
+          <strong>green_land.123</strong>
         </div>
-        <div class="comments">
-            <div><strong>nature_lover</strong> Beautiful sunset!</div>
-            <div class="comment-box">
-                <input type="text" placeholder="Add a comment..." onkeydown="sendComment(event)">
-            </div>
+        <img class="post-img" src="https://source.unsplash.com/800x600/?nature,forest" alt="post image">
+        <div class="post-icons">
+          <i class="far fa-heart" onclick="toggleLike(this)"></i>
+          <i class="far fa-comment"></i>
+          <i class="far fa-paper-plane"></i>
         </div>
+        <div class="post-caption">
+          <strong>green_land.123</strong> Loving this peaceful forest escape 🍃
+        </div>
+        <div class="comments" id="comments"></div>
+        <input class="comment-box" id="commentInput" placeholder="Add a comment..." onkeypress="submitComment(event)">
+      </div>
     </div>
-    <!-- Repeat for more posts -->
-</div>
+    <div class="sidebar">
+      <i class="far fa-comment-dots message-icon"></i>
+    </div>
+  </div>
 
-<!-- Chat Icon -->
-<div class="chat-icon" onclick="openChat()">💬</div>
-
-<script>
-    // Random user name generation for stories
-    const userNames = [];
-    for (let i = 0; i < 20; i++) {
-        let name = Math.random().toString(36).substring(7);
-        userNames.push(name);
-    }
-    
-    const storiesContainer = document.querySelector('.stories');
-    userNames.forEach(name => {
-        let story = document.createElement('div');
-        story.classList.add('story');
-        story.innerHTML = `
-            <img src="https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 10)}.jpg" alt="User">
-            <div class="story-name">${name}</div>
-        `;
-        storiesContainer.appendChild(story);
-    });
-
-    // Toggle heart button color
-    function toggleHeart(button) {
-        button.classList.toggle('active');
+  <script>
+    function toggleLike(icon) {
+      icon.classList.toggle('fas');
+      icon.classList.toggle('far');
+      icon.classList.toggle('liked');
     }
 
-    // Send comment when pressing Enter
-    function sendComment(event) {
-        if (event.key === 'Enter') {
-            alert('Comment sent!');
-            event.target.value = ''; // Clear input
+    function submitComment(e) {
+      if (e.key === 'Enter') {
+        const input = e.target;
+        const commentText = input.value.trim();
+        if (commentText !== '') {
+          const commentContainer = document.getElementById('comments');
+          const newComment = document.createElement('div');
+          newComment.textContent = commentText;
+          commentContainer.appendChild(newComment);
+          input.value = '';
         }
+      }
     }
-
-    // Placeholder function for opening chat
-    function openChat() {
-        alert('Open Chat!');
-    }
-</script>
-
+  </script>
 </body>
 </html>
