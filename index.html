@@ -1,172 +1,181 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Instagram 仿作</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instagram</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    body {
       background-color: #fafafa;
+      display: flex;
+      justify-content: center;
     }
-
-    header {
-      padding: 10px 16px;
-      font-size: 24px;
-      font-weight: bold;
-      border-bottom: 1px solid #dbdbdb;
-      background-color: white;
+    .container {
+      width: 935px;
+      display: flex;
+      margin-top: 20px;
     }
-
+    .feed {
+      flex: 2;
+      margin-right: 20px;
+    }
     .stories {
       display: flex;
       overflow-x: auto;
-      padding: 10px;
-      background-color: white;
-      border-bottom: 1px solid #dbdbdb;
-    }
-
-    .story {
-      margin-right: 12px;
-      text-align: center;
-    }
-
-    .story img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 2px solid #c13584;
-    }
-
-    .posts {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px 0;
-    }
-
-    .post {
-      background-color: white;
+      padding: 15px;
+      background-color: #fff;
       border: 1px solid #dbdbdb;
-      margin-bottom: 24px;
+      border-radius: 5px;
     }
-
+    .story {
+      text-align: center;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    .story img {
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      padding: 2px;
+      background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
+    }
+    .story p {
+      font-size: 12px;
+      margin-top: 5px;
+      overflow-wrap: anywhere;
+    }
+    .post {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      border-radius: 3px;
+      margin-top: 20px;
+    }
     .post-header {
       display: flex;
       align-items: center;
       padding: 10px;
     }
-
     .post-header img {
       width: 32px;
       height: 32px;
       border-radius: 50%;
       margin-right: 10px;
     }
-
-    .post-image {
+    .post-img {
       width: 100%;
     }
-
     .post-actions {
       display: flex;
-      align-items: center;
-      padding: 8px 10px;
+      padding: 10px;
     }
-
-    .post-actions button {
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
+    .post-actions i {
+      font-size: 20px;
       margin-right: 10px;
+      cursor: pointer;
     }
-
-    .post-caption {
+    .post-actions .liked {
+      color: red;
+    }
+    .post-content {
       padding: 0 10px 10px;
     }
-
     .comment-box {
-      display: flex;
+      padding: 10px;
       border-top: 1px solid #dbdbdb;
-      padding: 8px 10px;
     }
-
     .comment-box input {
-      flex: 1;
+      width: 100%;
       border: none;
       outline: none;
-      font-size: 14px;
-    }
-
-    .comment-box button {
-      border: none;
       background: none;
-      color: #0095f6;
-      font-weight: bold;
-      cursor: pointer;
     }
-
-    ::-webkit-scrollbar {
-      display: none;
+    .sidebar {
+      flex: 1;
+      padding: 20px 0;
+    }
+    .chat-icon {
+      text-align: right;
+      font-size: 24px;
     }
   </style>
 </head>
 <body>
-  <header>Instagram</header>
-
-  <div class="stories">
-    <!-- 限時動態 -->
-    <div class="story"><img src="https://i.pravatar.cc/60?img=1" alt=""><div>用戶1</div></div>
-    <div class="story"><img src="https://i.pravatar.cc/60?img=2" alt=""><div>用戶2</div></div>
-    <div class="story"><img src="https://i.pravatar.cc/60?img=3" alt=""><div>用戶3</div></div>
-    <div class="story"><img src="https://i.pravatar.cc/60?img=4" alt=""><div>用戶4</div></div>
-    <div class="story"><img src="https://i.pravatar.cc/60?img=5" alt=""><div>用戶5</div></div>
-    <div class="story"><img src="https://i.pravatar.cc/60?img=6" alt=""><div>用戶6</div></div>
-    <div class="story"><img src="https://i.pravatar.cc/60?img=7" alt=""><div>用戶7</div></div>
-  </div>
-
-  <div class="posts">
-    <!-- 貼文 -->
-    <div class="post">
-      <div class="post-header">
-        <img src="https://i.pravatar.cc/32?img=1" alt="">
-        <strong>用戶1</strong>
+  <div class="container">
+    <div class="feed">
+      <div class="stories" id="storyBar">
+        <!-- Stories will be injected here -->
       </div>
-      <img src="https://picsum.photos/600/400?random=1" class="post-image" alt="貼文圖片">
-      <div class="post-actions">
-        <button onclick="toggleLike(this)">♡</button>
-      </div>
-      <div class="post-caption"><strong>用戶1</strong> 這是一張美麗的照片！</div>
-      <div class="comment-box">
-        <input type="text" placeholder="新增留言……">
-        <button>發佈</button>
-      </div>
+      <div id="posts"></div>
     </div>
-
-    <div class="post">
-      <div class="post-header">
-        <img src="https://i.pravatar.cc/32?img=3" alt="">
-        <strong>用戶3</strong>
-      </div>
-      <img src="https://picsum.photos/600/400?random=2" class="post-image" alt="貼文圖片">
-      <div class="post-actions">
-        <button onclick="toggleLike(this)">♡</button>
-      </div>
-      <div class="post-caption"><strong>用戶3</strong> 夏日海邊超棒☀️</div>
-      <div class="comment-box">
-        <input type="text" placeholder="新增留言……">
-        <button>發佈</button>
+    <div class="sidebar">
+      <div class="chat-icon">
+        <i class="fa-regular fa-paper-plane"></i>
       </div>
     </div>
   </div>
 
   <script>
-    function toggleLike(button) {
-      if (button.textContent === '♡') {
-        button.textContent = '❤️';
-      } else {
-        button.textContent = '♡';
+    const names = Array.from({length: 20}, (_, i) => `user${i}_${Math.random().toString(36).substring(2, 6)}`);
+    const storyBar = document.getElementById('storyBar');
+    const postContainer = document.getElementById('posts');
+
+    names.forEach(name => {
+      const story = document.createElement('div');
+      story.className = 'story';
+      story.innerHTML = `
+        <img src="https://i.pravatar.cc/150?u=${name}" alt="${name}">
+        <p>${name}</p>
+      `;
+      storyBar.appendChild(story);
+    });
+
+    // Create 4 posts
+    for (let i = 0; i < 4; i++) {
+      const user = names[i];
+      const post = document.createElement('div');
+      post.className = 'post';
+      post.innerHTML = `
+        <div class="post-header">
+          <img src="https://i.pravatar.cc/32?u=${user}" alt="avatar">
+          <span>${user}</span>
+        </div>
+        <img class="post-img" src="https://source.unsplash.com/random/800x60${i}" alt="Post">
+        <div class="post-actions">
+          <i class="fa-regular fa-heart like-btn"></i>
+          <i class="fa-regular fa-comment"></i>
+          <i class="fa-regular fa-paper-plane"></i>
+        </div>
+        <div class="post-content">
+          <p><strong>${user}</strong> Enjoying the moment! #travel #life</p>
+        </div>
+        <div class="comment-box">
+          <input type="text" placeholder="Add a comment..." onkeydown="submitComment(event)">
+        </div>
+      `;
+      postContainer.appendChild(post);
+    }
+
+    // Toggle like
+    document.addEventListener('click', function (e) {
+      if (e.target.classList.contains('like-btn')) {
+        e.target.classList.toggle('fa-regular');
+        e.target.classList.toggle('fa-solid');
+        e.target.classList.toggle('liked');
+      }
+    });
+
+    function submitComment(e) {
+      if (e.key === 'Enter') {
+        alert('Comment submitted: ' + e.target.value);
+        e.target.value = '';
       }
     }
   </script>
